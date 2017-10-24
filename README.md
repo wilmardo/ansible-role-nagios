@@ -1,3 +1,8 @@
+# TODO
+- [ ] Add compilation of check_nrpe plugin https://support.nagios.com/kb/article/nrpe-how-to-install-nrpe-v3-from-source.html
+- [ ] Update links to Github
+- [ ] Plugins in defaults.yml could be nicer
+
 
 # Ansible Role: Nagios
 
