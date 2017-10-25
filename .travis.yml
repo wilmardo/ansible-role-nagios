@@ -13,9 +13,9 @@ env:
   - LXC_DISTRO=ubuntu LXC_RELEASE=precise
   - LXC_DISTRO=centos LXC_RELEASE=7
   - LXC_DISTRO=centos LXC_RELEASE=6
-  - ANSIBLE_VERSION='ansible>=1.9.0,<2.0.0' #EOL 2016-04-15
-  - ANSIBLE_VERSION='ansible>=2.0.0,<2.1.0' #EOL 2016-04-19
-  - ANSIBLE_VERSION='ansible>=2.1.0,<2.2.0' #EOL 2017-06-01
+#  - ANSIBLE_VERSION='ansible>=1.9.0,<2.0.0' #EOL 2016-04-15
+#  - ANSIBLE_VERSION='ansible>=2.0.0,<2.1.0' #EOL 2016-04-19
+#  - ANSIBLE_VERSION='ansible>=2.1.0,<2.2.0' #EOL 2017-06-01
   - ANSIBLE_VERSION='ansible>=2.2.0,<2.3.0' #EOL 2017-05-09
   - ANSIBLE_VERSION='ansible>=2.3.0,<2.4.0' #EOL 2017-06-01
   - ANSIBLE_VERSION='git+https://github.com/ansible/ansible.git@devel' #DEVEL
@@ -35,12 +35,12 @@ install:
 
 before_script:
   - if [ ! "$ANSIBLE_VERSION" ]; then ansible-galaxy install lae.travis-lxc; fi
-  - if [ ! "$ANSIBLE_VERSION" ]; then ansible-playbook -vvv tests/install.yml; fi
+  - if [ ! "$ANSIBLE_VERSION" ]; then ansible-playbook -vv tests/install.yml; fi
 
 script:
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - if [ ! "$ANSIBLE_VERSION" ]; then ansible-playbook -vvv tests/test.yml -i tests/inventory; fi
-  - if [ ! "$ANSIBLE_VERSION" ]; then unbuffer ansible-playbook -vvv tests/test.yml -i tests/inventory >/tmp/idempotency.log 2>&1; fi
+  - if [ ! "$ANSIBLE_VERSION" ]; then ansible-playbook -vv tests/test.yml -i tests/inventory; fi
+  - if [ ! "$ANSIBLE_VERSION" ]; then unbuffer ansible-playbook -vv tests/test.yml -i tests/inventory >/tmp/idempotency.log 2>&1; fi
   - if [ ! "$ANSIBLE_VERSION" ]; then 'grep -A1 "PLAY RECAP" /tmp/idempotency.log | grep -qP "changed=0.*failed=0" && (echo "Idempotence PASS"; exit 0) || (echo "Idempotence FAIL"; cat /tmp/idempotency.log; exit 1)'; fi
   - if [ ! "$ANSIBLE_VERSION" ]; then ssh root@test01.lxc /bin/bash -c "PAGER=cat journalctl -xn || cat /var/log/messages || cat /var/log/syslog"; fi
-  - if [ ! "$ANSIBLE_VERSION" ]; then ansible -vvv -m uri -a 'url=http://nagiosadmin:Password1change@{{ inventory_hostname }}/nagios/' -i tests/inventory all; fi
+  - if [ ! "$ANSIBLE_VERSION" ]; then ansible all -vv -m uri -a 'url=http://nagiosadmin:Password1change@{{ inventory_hostname }}/nagios/' -i tests/inventory; fi
