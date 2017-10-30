@@ -1,7 +1,7 @@
 galaxy_info:
   author: wilmardo
   description: |
-    Role to install Nagios 4 with check_nrpe plugin
+    Role to install Nagios 4 with nagios-plugins and check_nrpe plugin
 
   license: BSD-3-Clause-Clear
 
@@ -25,6 +25,9 @@ galaxy_info:
     - stretch
 
   galaxy_tags:
-    - tag
+    - nagios
+    - monitoring
+    - check_nrpe-plugin
+    - nagios-plugins
 
 dependencies: []
