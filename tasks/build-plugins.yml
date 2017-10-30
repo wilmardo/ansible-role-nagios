@@ -9,7 +9,7 @@
   unarchive:
     src: "{{ download_dir }}/{{ pluginssrc }}.tar.gz"
     dest: "{{ download_dir }}"
-    remote_src: true
+    remote_src: yes
 
 - name: Configure Plugins
   shell: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios --with-openssl=/usr/bin/openssl

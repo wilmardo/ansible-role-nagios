@@ -9,7 +9,7 @@
   unarchive:
     src: "{{ download_dir }}/{{ nagiossrc }}.tar.gz"
     dest: "{{ download_dir }}"
-    remote_src: true
+    remote_src: yes
 
 - name: Set upgrade as not required by default
   set_fact:
