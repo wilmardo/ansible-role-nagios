@@ -2,7 +2,9 @@
 # tasks file for nagios
 
 - name: Ensure download directory is present
-  file: path={{ download_dir }} state=directory
+  file:
+    path: "{{ download_dir }}"
+    state: directory
 
 - include: load-variables.yml
 
@@ -13,28 +15,42 @@
   when: ansible_os_family == 'Debian'
 
 - name: Create nagcmd group
-  group: name={{ monitoring_command_group }} state=present
+  group:
+    name: "{{ monitoring_command_group }}"
+    state: present
 
 - name: Create nagios user
-  user: name={{ monitoring_user }} state=present groups={{ monitoring_command_group }}
+  user:
+    name: "{{ monitoring_user }}"
+    groups: "{{ monitoring_command_group }}"
+    state: present
 
 - name: Add apache user to nagcmd group
-  user: name={{ apache_user }} state=present groups={{ monitoring_command_group }}
+  user:
+    name: "{{ apache_user }}"
+    groups: "{{ monitoring_command_group }}"
+    state: present
 
 - include: build-nagios.yml
 
 - include: build-plugins.yml
 
-- name: Activate Nagios site on Ubuntu 14.04
-  file: src=/etc/apache2/conf-available/nagios.conf dest=/etc/apache2/conf-enabled/nagios.conf state=link owner=root group=root
-  notify: restart apache
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
+- block:
+    - name: Activate Nagios site on Ubuntu 14.04
+      file:
+        src: /etc/apache2/conf-available/nagios.conf
+        dest: /etc/apache2/conf-enabled/nagios.conf
+        state: link
+        owner: root
+        group: root
+      notify: restart apache
 
-- name: Enable CGI
-  apache2_module:
-    name: cgi
-    state: present
-  notify: restart apache
+    - name: Enable CGI
+      apache2_module:
+        name: cgi
+        state: present
+      notify: restart apache
+
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
 
 - name: Enable version
@@ -55,7 +71,8 @@
     current_selinux_mode: false
 
 - name: Check if SELinux is running and has the mode key
-  set_fact: check_selinux=true
+  set_fact:
+    check_selinux: true
   when: ansible_selinux != False and 'mode' in ansible_selinux.keys()
 
 - name: Store selinux mode in current_selinux_mode variable
@@ -64,8 +81,14 @@
   when: check_selinux
 
 - name: Check if SELinux is running in enforcing mode and change access
-  file: path=/usr/local/nagios setype=httpd_sys_content_t state=directory recurse=yes
+  file:
+    path: /usr/local/nagios setype=httpd_sys_content_t
+    state: directory
+    recurse: yes
   when: current_selinux_mode == 'enforcing'
 
 - name: http service state
-  service: name={{ apache_service }} state=started enabled=yes
+  service:
+    name: "{{ apache_service }}"
+    state: started
+    enabled: yes

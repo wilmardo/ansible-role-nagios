@@ -1,16 +1,30 @@
 ---
 
 - name: Get Plugins
-  get_url: url={{ pluginsurl }} dest={{ download_dir }}/{{ pluginssrc }}.tar.gz
+  get_url:
+    url: "{{ pluginsurl }}"
+    dest: "{{ download_dir }}/{{ pluginssrc }}.tar.gz"
 
 - name: Unpack Plugin source files
-  shell: cd {{ download_dir }} && tar -xzvf {{ pluginssrc }}.tar.gz creates={{ download_dir }}/{{ pluginssrc }}
+  unarchive:
+    src: "{{ download_dir }}/{{ pluginssrc }}.tar.gz"
+    dest: "{{ download_dir }}"
+    remote_src: true
 
 - name: Configure Plugins
-  shell: cd {{ download_dir }}/{{ pluginssrc }} && ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios --with-openssl=/usr/bin/openssl creates={{ download_dir }}/{{ pluginssrc }}/Makefile
+  shell: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios --with-openssl=/usr/bin/openssl
+  args:
+    chdir: "{{ download_dir }}/{{ pluginssrc }}"
+    creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile"
 
 - name: Make Plugins
-  shell: cd {{ download_dir }}/{{ pluginssrc }} && make creates={{ download_dir }}/{{ pluginssrc }}/plugins/check_ping
+  shell:  make
+  args:
+    chdir: "{{ download_dir }}/{{ pluginssrc }}"
+    creates: "{{ download_dir }}/{{ pluginssrc }}/plugins/check_ping"
 
 - name: Make Install Plugins
-  shell: cd {{ download_dir }}/{{ pluginssrc }} && make install creates=/usr/local/nagios/libexec/check_ping
+  shell:  make install
+  args:
+    chdir: "{{ download_dir }}/{{ pluginssrc }}"
+    creates: "creates=/usr/local/nagios/libexec/check_ping"
