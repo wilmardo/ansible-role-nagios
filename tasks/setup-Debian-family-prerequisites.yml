@@ -5,25 +5,20 @@
     update_cache: yes
   changed_when: False
 
-- name: install apache
-  apt:
-    pkg: "{{ item }}"
-    state: present
-  with_items:
-   - apache2
-   - php5-gd
-   - libgd2-xpm-dev
-   - libapache2-mod-php5
-   - unzip
-
 - name: Install Nagios prerequisites for Ubuntu
   apt:
     pkg: "{{ item }}"
     state: present
   with_items:
-   #- linux-headers-{{ ansible_kernel }}
-   - build-essential
-   - python-passlib
+   - autoconf
+   - gcc
+   - libc6
+   - make
+   - unzip
+   - apache2
+   - apache2-utils
+   - php5
+   - libgd2-xpm-dev
 
 - name: setup-Debian | Remove Nagios3 and check-mk-livestatus for Ubuntu
   apt:

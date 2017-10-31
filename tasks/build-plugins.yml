@@ -12,6 +12,11 @@
     remote_src: yes
 
 - name: Configure Plugins
+  shell: ./tools/setup
+  args:
+    chdir: "{{ download_dir }}/{{ pluginssrc }}"
+
+- name: Configure Plugins
   shell: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios --with-openssl=/usr/bin/openssl
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"

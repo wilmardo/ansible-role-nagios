@@ -37,24 +37,22 @@
    - gcc
    - glibc
    - glibc-common
+   - unzip
    - gd
    - gd-devel
-   - make
-   - perl
-   - perl-devel
-   - wget
-   - python-passlib
-   - unzip
 
 - name: Install plugin prerequisites for CentOS
   yum:
     pkg: "{{ item }}"
     state: present
   with_items:
+   - gcc
+   - glibc
+   - glibc-common
+   - make
+   - gettext
+   - automake
+   - autoconf
    - openssl-devel
-   - fping
-   - openldap-devel
-   - postgresql-devel
-   - radiusclient-ng-devel
-   - samba-client
-   - libsmbclient
+   - net-snmp
+   - net-snmp-utils

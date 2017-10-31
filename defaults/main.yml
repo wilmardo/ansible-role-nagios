@@ -11,8 +11,7 @@ nagiosurl: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ na
 # This is the directory where the Nagios source files will be placed, this should be
 # the directory which is created when the download file is unpacked when runnint
 # tar -xzvf nagios-4.3.2.tar.gz
-# code checked http://mathias-kettner.com/check_mk_download_source.html for version of mk-livestatus 1.2.8p22
-nagiossrc: "nagios-{{ nagios_version }}"
+nagiossrc: "nagioscore-nagios-{{ nagios_version }}"
 
 nagios_plugins_version: 2.2.1
 # Define the download url for the Plugins and the version you want to use.
@@ -21,7 +20,7 @@ pluginsurl: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{
 # This is the directory where the Plugin source files will be placed, this should be
 # the directory which is created when the download file is unpacked when runnint
 # tar -xzvf nagios-plugins-2.2.1.tar.gz
-pluginssrc: "nagios-plugins-{{ nagios_plugins_version }}"
+pluginssrc: "nagios-plugins-release-{{ nagios_plugins_version }}"
 
 monitoring_user: nagios
 monitoring_command_group: nagcmd
