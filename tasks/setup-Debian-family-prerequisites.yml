@@ -10,24 +10,24 @@
     pkg: "{{ item }}"
     state: present
   with_items:
-   - autoconf
-   - gcc
-   - libc6
-   - make
-   - unzip
-   - apache2
-   - apache2-utils
-   - php5
-   - libgd2-xpm-dev
+    - autoconf
+    - gcc
+    - libc6
+    - make
+    - unzip
+    - apache2
+    - apache2-utils
+    - php5
+    - libgd2-xpm-dev
 
 - name: setup-Debian | Remove Nagios3 and check-mk-livestatus for Ubuntu
   apt:
     pkg: "{{ item }}"
     state: absent
   with_items:
-   - nagios3
-   - nagios3-core
-   - check-mk-livestatus
+    - nagios3
+    - nagios3-core
+    - check-mk-livestatus
   when: ansible_role_nagios_remove_packages
 
 - name: Install Plugin prerequisites for Debian family
@@ -35,25 +35,25 @@
     pkg: "{{ item }}"
     state: present
   with_items:
-   - libssl-dev
-   - dnsutils
-   - fping
-   - libldap2-dev
-   - libpq-dev
-   - smbclient
-   - gawk
+    - libssl-dev
+    - dnsutils
+    - fping
+    - libldap2-dev
+    - libpq-dev
+    - smbclient
+    - gawk
 
 - name: Install ansible prerequisites for Debian family
   apt:
     pkg: "{{ item }}"
     state: present
   with_items:
-   - python-urllib3 # fix SSL error when using ansible module get_url https://github.com/ansible/ansible/issues/23642
+    - python-urllib3 # fix SSL error when using ansible module get_url https://github.com/ansible/ansible/issues/23642
 
 - name: Install Plugin prerequisites for Ubuntu
   apt:
     pkg: "{{ item }}"
     state: present
   with_items:
-   - libradiusclient-ng-dev
+    - libradiusclient-ng-dev
   when: ansible_distribution == 'Ubuntu'
