@@ -3,7 +3,7 @@
 - name: GET Nagios
   get_url:
     url: "{{ nagiosurl }}"
-    dest: "git {{ download_dir }}/{{ nagiossrc }}.tar.gz"
+    dest: "{{ download_dir }}/{{ nagiossrc }}.tar.gz"
 
 - name: Unpack Nagios source files
   unarchive:
