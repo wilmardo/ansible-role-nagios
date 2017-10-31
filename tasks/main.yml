@@ -6,12 +6,12 @@
     path: "{{ download_dir }}"
     state: directory
 
-- include: load-variables.yml
+- include_tasks: load-variables.yml
 
-- include: "setup-RedHat-family-prerequisites.yml"
+- include_tasks: setup-RedHat-family-prerequisites.yml
   when: ansible_os_family == 'RedHat'
 
-- include: setup-Debian-family-prerequisites.yml
+- include_tasks: setup-Debian-family-prerequisites.yml
   when: ansible_os_family == 'Debian'
 
 - name: Create nagcmd group
@@ -31,9 +31,12 @@
     groups: "{{ monitoring_command_group }}"
     state: present
 
-- include: build-nagios.yml
+- include_tasks: build-nagios.yml
 
-- include: build-plugins.yml
+- include_tasks: build-plugins.yml
+
+- include_tasks: setup-selinux.yml
+  when: ansible_os_family == 'RedHat'
 
 - block:
     - name: Activate Nagios site on Ubuntu 14.04
@@ -61,31 +64,9 @@
   notify: restart apache
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
 
-- name: Fix Nagios startup on Debian
-  shell: cd /etc/rc2.d && ln -s ../init.d/nagios S18nagios creates=/etc/rc2.d/S18nagios
-  when: ansible_distribution == 'Debian'
-
-- name: Default facts for selinux
-  set_fact:
-    check_selinux: false
-    current_selinux_mode: false
-
-- name: Check if SELinux is running and has the mode key
-  set_fact:
-    check_selinux: true
-  when: ansible_selinux != False and 'mode' in ansible_selinux.keys()
-
-- name: Store selinux mode in current_selinux_mode variable
-  set_fact:
-    current_selinux_mode: '{{ ansible_selinux.mode }}'
-  when: check_selinux
-
-- name: Check if SELinux is running in enforcing mode and change access
-  file:
-    path: /usr/local/nagios setype=httpd_sys_content_t
-    state: directory
-    recurse: yes
-  when: current_selinux_mode == 'enforcing'
+#- name: Fix Nagios startup on Debian
+#  shell: cd /etc/rc2.d && ln -s ../init.d/nagios S18nagios creates=/etc/rc2.d/S18nagios
+#  when: ansible_distribution == 'Debian'
 
 - name: http service state
   service:

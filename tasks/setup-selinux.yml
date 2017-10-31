@@ -1,0 +1,22 @@
+---
+- name: Default facts for selinux
+  set_fact:
+    check_selinux: false
+    current_selinux_mode: false
+
+- name: Check if SELinux is running and has the mode key
+  set_fact:
+    check_selinux: true
+  when: ansible_selinux != False and 'mode' in ansible_selinux.keys()
+
+- name: Store selinux mode in current_selinux_mode variable
+  set_fact:
+    current_selinux_mode: '{{ ansible_selinux.mode }}'
+  when: check_selinux
+
+- name: Check if SELinux is running in enforcing mode and change access
+  file:
+    path: /usr/local/nagios setype=httpd_sys_content_t
+    state: directory
+    recurse: yes
+  when: current_selinux_mode == 'enforcing'

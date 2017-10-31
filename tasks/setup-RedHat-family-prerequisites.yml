@@ -21,17 +21,17 @@
 
 - name: install apache
   yum:
-    pkg: "{{ item }}"
+    name: "{{ item }}"
     state: present
   with_items:
-   - php
    - httpd
-   - libsemanage-python
-   - libselinux-python
+   - php
+#   - libsemanage-python
+#   - libselinux-python
 
 - name: Install Nagios prerequisites for CentOS
   yum:
-    pkg: "{{ item }}"
+    name: "{{ item }}"
     state: present
   with_items:
    - gcc
@@ -43,7 +43,7 @@
 
 - name: Install plugin prerequisites for CentOS
   yum:
-    pkg: "{{ item }}"
+    name: "{{ item }}"
     state: present
   with_items:
    - gcc
@@ -56,3 +56,10 @@
    - openssl-devel
    - net-snmp
    - net-snmp-utils
+
+- name: Install ansible prerequisites for Redhat family
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-passlib
