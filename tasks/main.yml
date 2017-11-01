@@ -1,6 +1,11 @@
 ---
 # tasks file for nagios
 
+- name: Ensure download directory is present
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+
 - include: load-variables.yml
 
 - include: setup-epel.yml

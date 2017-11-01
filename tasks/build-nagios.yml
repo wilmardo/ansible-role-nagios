@@ -1,10 +1,5 @@
 ---
 
-- name: Ensure download directory is present
-  file:
-    path: "{{ download_dir }}"
-    state: directory
-
 - name: GET Nagios
   get_url:
     url: "{{ nagiosurl }}"
