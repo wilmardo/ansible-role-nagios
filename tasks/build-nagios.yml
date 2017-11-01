@@ -1,5 +1,10 @@
 ---
 
+- name: Ensure download directory is present
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+
 - name: GET Nagios
   get_url:
     url: "{{ nagiosurl }}"
@@ -21,7 +26,7 @@
     path: /usr/local/nagios/share/main.php
   register: nagios_mainphp_file
 
-- block: 
+- block:
 
   - name: read nagios installed version
     shell: head /usr/local/nagios/share/main.php | grep "this_version" | cut -d"=" -f 2 | tr --delete ";" | tr --delete "'" | xargs echo -n
@@ -44,9 +49,9 @@
     dest: "{{ item }}.bkp"
     force: yes
   with_items:
-    - "/usr/local/nagios/share/main.html"
-    - "/usr/local/nagios/share/index.html"
-    - "/usr/local/nagios/share/side.html"
+    - "/usr/local/nagios/share/main.php"
+    - "/usr/local/nagios/share/index.php"
+    - "/usr/local/nagios/share/side.php"
     - "{{ with_httpd_conf }}/nagios.conf"
     - "/usr/local/nagios/bin/nagios"
     - "/usr/local/nagios/include/nagios/nagios.h"
@@ -59,9 +64,9 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - "/usr/local/nagios/share/main.html"
-    - "/usr/local/nagios/share/index.html"
-    - "/usr/local/nagios/share/side.html"
+    - "/usr/local/nagios/share/main.php"
+    - "/usr/local/nagios/share/index.php"
+    - "/usr/local/nagios/share/side.php"
     - "{{ with_httpd_conf }}/nagios.conf"
     - "/usr/local/nagios/bin/nagios"
     - "/usr/local/nagios/var/rw"
@@ -88,36 +93,40 @@
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/bin/nagios
 
-- name: Make install-config
-  shell: make install-config
-  args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: /usr/local/nagios/etc/nagios.cfg
+- name: check configuration files
+  shell: /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 
-- name: Make install-commandmode
-  shell: make install-commandmode
-  args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: /usr/local/nagios/var/rw
-
-- name: Make install-devel
-  shell: make install-devel
-  args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: /usr/local/nagios/include/nagios/nagios.h
-
-- name: Make install-webconf
-  shell: make install-webconf
-  args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: "{{ with_httpd_conf }}/nagios.conf"
-  notify: restart apache
+#- name: Make install-config
+#  shell: make install-config
+#  args:
+#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+#    creates: /usr/local/nagios/etc/nagios.cfg
+#
+#- name: Make install-commandmode
+#  shell: make install-commandmode
+#  args:
+#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+#    creates: /usr/local/nagios/var/rw
+#
+#- name: Make install-devel
+#  shell: make install-devel
+#  args:
+#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+#    creates: /usr/local/nagios/include/nagios/nagios.h
+#
+#- name: Make install-webconf
+#  shell: make install-webconf
+#  args:
+#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+#    creates: "{{ with_httpd_conf }}/nagios.conf"
+#  notify: restart apache
 
 - name: Make install-init
   shell: make install-init
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /etc/init.d/nagios
+  notify: restart nagios
 
 - name: Set htpasswd for gui users
   htpasswd:
@@ -127,8 +136,7 @@
     state: present
   with_items: "{{ nagios_users }}"
 
-- name: Ensure Nagios is started
+- name: Ensure Nagios is enabled on boot
   service:
     name: nagios
-    state: started
     enabled: yes

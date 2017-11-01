@@ -56,6 +56,7 @@
    - openssl-devel
    - net-snmp
    - net-snmp-utils
+   - which
 
 - name: Install ansible prerequisites for Redhat family
   yum:
