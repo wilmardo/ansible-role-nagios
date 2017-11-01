@@ -93,9 +93,6 @@
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/bin/nagios
 
-- name: check configuration files
-  shell: /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
-
 #- name: Make install-config
 #  shell: make install-config
 #  args:

@@ -1,0 +1,25 @@
+---
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  changed_when: False
+
+- name: Install Nagios prerequisites
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ nagios_prerequisites }}"
+
+- name: Install Plugin prerequisites for Debian family
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ nagios_plugins_prerequisites }}"
+
+- name: Install Ansible prerequisites
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-passlib

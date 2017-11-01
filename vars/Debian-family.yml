@@ -1,3 +1,19 @@
 ---
 apache_service: apache2
 apache_user: www-data
+with_httpd_conf: /etc/apache2/conf-available
+
+nagios_plugins_prerequisites:
+  - autoconf
+  - gcc
+  - libc6
+  - libmcrypt-dev
+  - make
+  - libssl-dev
+  - bc
+  - gawk
+  - dc
+  - build-essential
+  - snmp
+  - libnet-snmp-perl
+  - gettext

@@ -1,2 +1,13 @@
 ---
 with_httpd_conf: /etc/apache2/conf.d
+
+nagios_prerequisites:
+  - autoconf
+  - gcc
+  - libc6
+  - make
+  - unzip
+  - apache2
+  - apache2-utils
+  - php5
+  - libgd-dev
