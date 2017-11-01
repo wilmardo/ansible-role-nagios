@@ -52,7 +52,7 @@
     - "/usr/local/nagios/share/main.php"
     - "/usr/local/nagios/share/index.php"
     - "/usr/local/nagios/share/side.php"
-    - "{{ with_httpd_conf }}/nagios.conf"
+    - "{{ nagios_httpd_conf_location }}/nagios.conf"
     - "/usr/local/nagios/bin/nagios"
     - "/usr/local/nagios/include/nagios/nagios.h"
     - "/etc/init.d/nagios"
@@ -67,7 +67,7 @@
     - "/usr/local/nagios/share/main.php"
     - "/usr/local/nagios/share/index.php"
     - "/usr/local/nagios/share/side.php"
-    - "{{ with_httpd_conf }}/nagios.conf"
+    - "{{ nagios_httpd_conf_location }}/nagios.conf"
     - "/usr/local/nagios/bin/nagios"
     - "/usr/local/nagios/var/rw"
     - "/usr/local/nagios/include/nagios/nagios.h"
@@ -76,7 +76,7 @@
   notify: restart nagios
 
 - name: ./configure
-  shell: ./configure --with-command-group={{ monitoring_command_group }} -with-httpd_conf={{ with_httpd_conf }} --with-nagios-user={{ monitoring_user }}
+  shell: ./configure --with-command-group={{ monitoring_command_group }} --with-httpd_conf={{ nagios_httpd_conf_location }} --with-nagios-user={{ monitoring_user }}
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: "{{ download_dir }}/{{ nagiossrc }}/Makefile"
@@ -123,7 +123,7 @@
   shell: make install-webconf
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: "{{ with_httpd_conf }}/nagios.conf"
+    creates: "{{ nagios_httpd_conf_location }}/nagios.conf"
   notify: restart apache
 
 - name: Set htpasswd for gui users
@@ -133,6 +133,24 @@
     password: "{{ item.pass }}"
     state: present
   with_items: "{{ nagios_users }}"
+
+- name: Reload Systemd
+  systemd:
+    name: nrpe
+    daemon_reload: yes
+  when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == "7") or
+        (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 15) or
+        (ansible_distribution == "Debian" and ansible_distribution_major_version|int >= 8)
+
+- name: Reload SysVinit
+  command: update-rc.d nagios defaults
+  changed_when: False
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version|int < 8
+
+- name: Reload Upstart
+  command: initctl reload-configuration
+  changed_when: False
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int < 15
 
 - name: Ensure Nagios is enabled on boot
   service:

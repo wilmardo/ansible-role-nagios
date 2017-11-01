@@ -12,24 +12,19 @@
     remote_src: yes
 
 - name: Configure Plugins
-  shell: ./tools/setup
-  args:
-    chdir: "{{ download_dir }}/{{ pluginssrc }}"
-
-- name: Configure Plugins
-  shell: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios --with-openssl=/usr/bin/openssl
+  shell: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
     creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile"
 
 - name: Make Plugins
-  shell:  make
+  shell: make
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
     creates: "{{ download_dir }}/{{ pluginssrc }}/plugins/check_ping"
 
 - name: Make Install Plugins
-  shell:  make install
+  shell: make install
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
-    creates: "creates=/usr/local/nagios/libexec/check_ping"
+    creates: "/usr/local/nagios/libexec/check_icmp"

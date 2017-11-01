@@ -1,7 +1,6 @@
 ---
 apache_service: apache2
 apache_user: www-data
-with_httpd_conf: /etc/apache2/conf-available
 
 nagios_plugins_prerequisites:
   - autoconf
