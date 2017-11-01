@@ -75,7 +75,7 @@
   when: nagios_upgrade_required
   notify: restart nagios
 
-- name: ./configure
+- name: Configure Nagios
   command: ./configure --with-command-group={{ monitoring_command_group }} --with-httpd_conf={{ nagios_httpd_conf_location }} --with-nagios-user={{ monitoring_user }}
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"

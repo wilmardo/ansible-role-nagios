@@ -15,7 +15,7 @@
   command: ./tools/setup
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
-    creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile.am"
+    creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile.in"
 
 - name: Configure Plugins
   command: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios
