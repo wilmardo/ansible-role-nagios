@@ -1,43 +1,22 @@
 ---
 # tasks file for nagios
-- block:
 
-  - include: load-variables.yml
+- include: load-variables.yml
 
-  - include: setup-RedHat-family-prerequisites.yml
-    when: ansible_os_family == 'RedHat'
+- include: setup-RedHat-family-prerequisites.yml
+  when: ansible_os_family == 'RedHat'
 
-  - include: setup-Debian-family-prerequisites.yml
-    when: ansible_os_family == 'Debian'
+- include: setup-Debian-family-prerequisites.yml
+  when: ansible_os_family == 'Debian'
 
-  - include: build-nagios.yml
+- include: setup-users.yml
 
-  - include: build-plugins.yml
+- include: build-nagios.yml
 
-  - include: setup-selinux.yml
-    when: ansible_os_family == 'RedHat'
+- include: build-plugins.yml
 
-  when: ansible_version.full < 2.4
-
-
-- block:
-
-  - include_tasks: load-variables.yml
-
-  - include_tasks: setup-RedHat-family-prerequisites.yml
-    when: ansible_os_family == 'RedHat'
-
-  - include_tasks: setup-Debian-family-prerequisites.yml
-    when: ansible_os_family == 'Debian'
-
-  - include_tasks: build-nagios.yml
-
-  - include_tasks: build-plugins.yml
-
-  - include_tasks: setup-selinux.yml
-    when: ansible_os_family == 'RedHat'
-
-  when: ansible_version.full >= 2.4
+- include: setup-selinux.yml
+  when: ansible_os_family == 'RedHat'
 
 - block:
     - name: Activate Nagios site on Ubuntu 14.04
