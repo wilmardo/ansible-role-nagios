@@ -93,16 +93,17 @@
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/bin/nagios
 
-- name: Make install-init
+- name: Make install-config
   shell: make install-config
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    creates: /usr/local/nagios/etc/nagios.cfg
 
 - name: Make install-init
   shell: make install-init
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: /etc/init.d/nagios
+    creates: "{{ nagios_init }}"
   notify: restart nagios
 
 - name: Make install-commandmode

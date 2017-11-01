@@ -1,0 +1,2 @@
+---
+nagios_init: /usr/lib/systemd/system/nagios.service # Systemd
