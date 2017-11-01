@@ -11,20 +11,26 @@
     dest: "{{ download_dir }}"
     remote_src: yes
 
+- name: Setup Plugins
+  command: ./tools/setup
+  args:
+    chdir: "{{ download_dir }}/{{ pluginssrc }}"
+    creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile.am"
+
 - name: Configure Plugins
-  shell: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios
+  command: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
     creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile"
 
 - name: Make Plugins
-  shell: make
+  command: make
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
     creates: "{{ download_dir }}/{{ pluginssrc }}/plugins/check_ping"
 
 - name: Make Install Plugins
-  shell: make install
+  command: make install
   args:
     chdir: "{{ download_dir }}/{{ pluginssrc }}"
     creates: "/usr/local/nagios/libexec/check_icmp"

@@ -76,51 +76,51 @@
   notify: restart nagios
 
 - name: ./configure
-  shell: ./configure --with-command-group={{ monitoring_command_group }} --with-httpd_conf={{ nagios_httpd_conf_location }} --with-nagios-user={{ monitoring_user }}
+  command: ./configure --with-command-group={{ monitoring_command_group }} --with-httpd_conf={{ nagios_httpd_conf_location }} --with-nagios-user={{ monitoring_user }}
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: "{{ download_dir }}/{{ nagiossrc }}/Makefile"
 
 - name: Make all
-  shell: make all
+  command: make all
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: "{{ download_dir }}/{{ nagiossrc }}/base/nagios"
 
 - name: Make install
-  shell: make install
+  command: make install
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/bin/nagios
 
 - name: Make install-config
-  shell: make install-config
+  command: make install-config
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/etc/nagios.cfg
 
 - name: Make install-init
-  shell: make install-init
+  command: make install-init
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: "{{ nagios_init }}"
   notify: restart nagios
 
 - name: Make install-commandmode
-  shell: make install-commandmode
+  command: make install-commandmode
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/var/rw
   notify: restart nagios
 
 - name: Make install-config
-  shell: make install-config
+  command: make install-config
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/etc/nagios.cfg
 
 - name: Make install-webconf
-  shell: make install-webconf
+  command: make install-webconf
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: "{{ nagios_httpd_conf_location }}/nagios.conf"
