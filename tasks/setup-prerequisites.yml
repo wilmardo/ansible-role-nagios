@@ -18,3 +18,8 @@
     state: present
   with_items:
     - python-passlib
+
+- name: Ensure Apache is enabled on boot
+  service:
+    name: "{{ apache_service }}"
+    enabled: yes

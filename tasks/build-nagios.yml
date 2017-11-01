@@ -93,30 +93,10 @@
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /usr/local/nagios/bin/nagios
 
-#- name: Make install-config
-#  shell: make install-config
-#  args:
-#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-#    creates: /usr/local/nagios/etc/nagios.cfg
-#
-#- name: Make install-commandmode
-#  shell: make install-commandmode
-#  args:
-#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-#    creates: /usr/local/nagios/var/rw
-#
-#- name: Make install-devel
-#  shell: make install-devel
-#  args:
-#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-#    creates: /usr/local/nagios/include/nagios/nagios.h
-#
-#- name: Make install-webconf
-#  shell: make install-webconf
-#  args:
-#    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-#    creates: "{{ with_httpd_conf }}/nagios.conf"
-#  notify: restart apache
+- name: Make install-init
+  shell: make install-config
+  args:
+    chdir: "{{ download_dir }}/{{ nagiossrc }}"
 
 - name: Make install-init
   shell: make install-init
@@ -124,6 +104,26 @@
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
     creates: /etc/init.d/nagios
   notify: restart nagios
+
+- name: Make install-commandmode
+  shell: make install-commandmode
+  args:
+    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    creates: /usr/local/nagios/var/rw
+  notify: restart nagios
+
+- name: Make install-config
+  shell: make install-config
+  args:
+    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    creates: /usr/local/nagios/etc/nagios.cfg
+
+- name: Make install-webconf
+  shell: make install-webconf
+  args:
+    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    creates: "{{ with_httpd_conf }}/nagios.conf"
+  notify: restart apache
 
 - name: Set htpasswd for gui users
   htpasswd:
