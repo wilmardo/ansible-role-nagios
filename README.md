@@ -1,5 +1,4 @@
 # wilmardo.nagios
-=========
 
 [![Build Status](https://travis-ci.org/wilmardo/ansible-role-nagios.svg?branch=master)](https://travis-ci.org/wilmardo/ansible-role-nagios)
 [![Galaxy](http://img.shields.io/badge/galaxy-wilmardo.nagios-blue.svg)](https://galaxy.ansible.com/wilmardo/nagios/)
@@ -86,4 +85,4 @@ BSD-3-Clause-Clear
 ## Author Information
 
 This role was originally created by [Patrick Ogenstad](http://networklore.com).
-Forked in 2017 by [Wilmar den Ouden](https://wilmardenouden.nl)
+Forked in 2017 by [Wilmar den Ouden](https://wilmardenouden.nl).
