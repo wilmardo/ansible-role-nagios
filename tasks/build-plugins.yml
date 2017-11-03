@@ -2,35 +2,35 @@
 
 - name: Get Plugins
   get_url:
-    url: "{{ pluginsurl }}"
-    dest: "{{ download_dir }}/{{ pluginssrc }}.tar.gz"
+    url: "{{ nagios_plugins_url }}"
+    dest: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}.tar.gz"
 
 - name: Unpack Plugin source files
   unarchive:
-    src: "{{ download_dir }}/{{ pluginssrc }}.tar.gz"
-    dest: "{{ download_dir }}"
+    src: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}.tar.gz"
+    dest: "{{ nagios_download_dir }}"
     remote_src: yes
 
 - name: Setup Plugins
   command: ./tools/setup
   args:
-    chdir: "{{ download_dir }}/{{ pluginssrc }}"
-    creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile.in"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}"
+    creates: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}/Makefile.in"
 
 - name: Configure Plugins
-  command: ./configure --with-nagios-user={{ monitoring_user }} --with-nagios-group=nagios
+  command: ./configure --with-nagios-user={{ nagios_monitoring_user }} --with-nagios-group=nagios
   args:
-    chdir: "{{ download_dir }}/{{ pluginssrc }}"
-    creates: "{{ download_dir }}/{{ pluginssrc }}/Makefile"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}"
+    creates: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}/Makefile"
 
 - name: Make Plugins
   command: make
   args:
-    chdir: "{{ download_dir }}/{{ pluginssrc }}"
-    creates: "{{ download_dir }}/{{ pluginssrc }}/plugins/check_ping"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}"
+    creates: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}/plugins/check_ping"
 
 - name: Make Install Plugins
   command: make install
   args:
-    chdir: "{{ download_dir }}/{{ pluginssrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}"
     creates: "/usr/local/nagios/libexec/check_icmp"

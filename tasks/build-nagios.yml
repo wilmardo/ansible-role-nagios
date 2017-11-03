@@ -2,13 +2,13 @@
 
 - name: GET Nagios
   get_url:
-    url: "{{ nagiosurl }}"
-    dest: "{{ download_dir }}/{{ nagiossrc }}.tar.gz"
+    url: "{{ nagios_url }}"
+    dest: "{{ nagios_download_dir }}/{{ nagios_src }}.tar.gz"
 
 - name: Unpack Nagios source files
   unarchive:
-    src: "{{ download_dir }}/{{ nagiossrc }}.tar.gz"
-    dest: "{{ download_dir }}"
+    src: "{{ nagios_download_dir }}/{{ nagios_src }}.tar.gz"
+    dest: "{{ nagios_download_dir }}"
     remote_src: yes
 
 - name: Set upgrade as not required by default
@@ -71,53 +71,53 @@
   notify: restart nagios
 
 - name: Configure Nagios
-  command: ./configure --with-command-group={{ monitoring_command_group }} --with-nagios-user={{ monitoring_user }}
+  command: ./configure --with-command-group={{ nagios_monitoring_command_group }} --with-nagios-user={{ nagios_monitoring_user }}
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: "{{ download_dir }}/{{ nagiossrc }}/Makefile"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
+    creates: "{{ nagios_download_dir }}/{{ nagios_src }}/Makefile"
 
 - name: Make all
   command: make all
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: "{{ download_dir }}/{{ nagiossrc }}/base/nagios"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
+    creates: "{{ nagios_download_dir }}/{{ nagios_src }}/base/nagios"
 
 - name: Make install
   command: make install
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: /usr/local/nagios/bin/nagios
 
 - name: Make install-config
   command: make install-config
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: /usr/local/nagios/etc/nagios.cfg
 
 - name: Make install-init
   command: make install-init
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: "{{ nagios_init }}"
   notify: restart nagios
 
 - name: Make install-commandmode
   command: make install-commandmode
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: /usr/local/nagios/var/rw
   notify: restart nagios
 
 - name: Make install-config
   command: make install-config
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: /usr/local/nagios/etc/nagios.cfg
 
 - name: Make install-webconf
   command: make install-webconf
   args:
-    chdir: "{{ download_dir }}/{{ nagiossrc }}"
+    chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: "{{ nagios_httpd_location }}/nagios.conf"
   notify: restart apache
 

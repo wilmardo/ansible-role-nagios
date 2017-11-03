@@ -3,7 +3,7 @@
 
 - name: Ensure download directory is present
   file:
-    path: "{{ download_dir }}"
+    path: "{{ nagios_download_dir }}"
     state: directory
 
 - include: load-variables.yml

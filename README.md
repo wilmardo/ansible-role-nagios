@@ -13,32 +13,45 @@ None.
 
 ## Role Variables
 
-The variables you can configure are listed below. For the default settings you can look in `defaults/main.yml`.
+### Default usage
 
-    download_dir: /home/user/download/nagios
-
-This is the directory where the downloaded files will be placed and extracted.
-
-    nagiosurl: https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.1.1.tar.gz
-    nagiossrc: nagios-4.3.2
-
-The download url for Nagios along with the directory name which will be created when the source file is
-decompressed to. I.e. with `tar -xzvf nagios-4.3.2.tar.gz`
-
-    pluginsurl: http://www.nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
-    pluginssrc: nagios-plugins-2.2.1
-
-Same as for Nagios but for the Nagios plugins.
-
+For default usage of this role you only need to define the following:
+    
+    # The users which should be allowed to login to the Nagios web GUI.
     nagios_users:
       - user: nagiosadmin
-        pass: Password123
-      - user: tyrion
-        pass: red_w1ne
-      - user: daenerys
-        pass: dragon_fir3
+        pass: Password1change
 
-The users which should be allowed to login to the Nagios web GUI.
+### Advance usage
+
+For more advanced usage the following variables are available:
+
+    # The directory where the downloaded files will be placed and extracted.
+    nagios_download_dir: "{{ ansible_env.HOME }}/nagios"
+
+    # The version of Nagios to be installed    
+    nagios_version: 4.3.4
+    
+    # The Nagios download url
+    nagios_url: https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz
+    
+    # The name of the untarred directory
+    nagios_src: "nagioscore-nagios-{{ nagios_version }}"
+
+    # The version of Nagios Plugins to be installed
+    nagios_plugins_version: 2.2.1
+    
+    # The Nagios Plugins download url
+    nagios_plugins_url: http://www.nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
+    
+    # The name of the untarred directory
+    nagios_plugins_src: nagios_plugins_src: "nagios-plugins-release-{{ nagios_plugins_version }}"
+    
+    # The user which the Nagios daemon runs as
+    nagios_monitoring_user: nagios
+
+    # The group which the Nagios daemon runs as
+    nagios_monitoring_command_group: nagios
 
 ## Dependencies
 
@@ -60,7 +73,7 @@ Install Nagios and setup the password for your nagiosadmin user.
 
 The role has automatic upgrade when you change the version with var:
 
-    nagios_version: 4.3.2
+    nagios_version: 4.3.4
 
 But the upgrade requires to remove some old files to, check [build-nagios.yml](tasks/build-nagios.yml) for details.
 

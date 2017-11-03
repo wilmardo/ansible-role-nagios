@@ -2,17 +2,17 @@
 
 - name: Create nagcmd group
   group:
-    name: "{{ monitoring_command_group }}"
+    name: "{{ nagios_monitoring_command_group }}"
     state: present
 
 - name: Create nagios user
   user:
-    name: "{{ monitoring_user }}"
-    groups: "{{ monitoring_command_group }}"
+    name: "{{ nagios_monitoring_user }}"
+    groups: "{{ nagios_monitoring_command_group }}"
     state: present
 
 - name: Add apache user to nagcmd group
   user:
     name: "{{ apache_user }}"
-    groups: "{{ monitoring_command_group }}"
+    groups: "{{ nagios_monitoring_command_group }}"
     state: present
