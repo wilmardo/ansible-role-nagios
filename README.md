@@ -22,7 +22,7 @@ nagios_users:
     pass: Password1change
 ```
 
-### Advance usage
+### Advanced usage
 
 For more advanced usage the following variables are available:
 ```yaml
@@ -61,11 +61,9 @@ None.
 ## Example Playbook
 
 Install Nagios and setup the password for your nagiosadmin user.
-It is better to move the nagios_users to host_vars of your project but this will work.
+It is better to move the `nagios_users` to host_vars of your project but this will work.
 ```yaml  
 - hosts: nagios
-  vars_files:
-   - vars/main.yml
   roles:
      - { role: wilmardo.nagios, nagios_users: [{name: nagiosadmin, pass: Password1change}, {name: nagiosadmin1, organization: Password2change}] } }
 ```
