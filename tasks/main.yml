@@ -17,33 +17,9 @@
 
 - include: build-nagios.yml
 
+- include: setup-apache.yml
+
 - include: build-plugins.yml
 
 - include: setup-selinux.yml
   when: ansible_os_family == 'RedHat'
-
-- block:
-#    - name: Activate Nagios site on Ubuntu 14.04
-#      file:
-#        src: /etc/apache2/conf-available/nagios.conf
-#        dest: /etc/apache2/conf-enabled/nagios.conf
-#        state: link
-#        owner: root
-#        group: root
-#      notify: restart apache
-
-    - name: Enable CGI
-      apache2_module:
-        name: cgi
-        state: present
-      notify: restart apache
-
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04'
-
-- name: Enable version
-  file:
-    src: ../mods-available/version.load
-    dest: /etc/apache2/mods-enabled/version.load
-    state: link
-  notify: restart apache
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
