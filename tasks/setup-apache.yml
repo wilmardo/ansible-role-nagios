@@ -7,6 +7,7 @@
   with_items:
     - cgi
     - rewrite
+  when: ansible_os_family == "Debian"
   notify: restart apache
 
 - name: Set htpasswd for gui users
