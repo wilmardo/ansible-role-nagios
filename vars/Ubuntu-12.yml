@@ -10,6 +10,6 @@ nagios_prerequisites:
   - apache2
   - apache2-utils
   - php5
-  - libgd-dev
+  - libgd2-xpm-dev
 
 nagios_init: /etc/init.d/nagios # Upstart
