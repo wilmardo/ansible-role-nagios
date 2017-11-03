@@ -29,11 +29,11 @@ For more advanced usage the following variables are available:
 # The directory where the downloaded files will be placed and extracted.
 nagios_download_dir: "{{ ansible_env.HOME }}/nagios"
 
-# The version of Nagios to be installed    
+# The version of Nagios to be installed
 nagios_version: 4.3.4
 
 # The Nagios download url
-nagios_url: https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz
+nagios_url: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz"
 
 # The name of the untarred Nagios directory
 nagios_src: "nagioscore-nagios-{{ nagios_version }}"
@@ -42,10 +42,10 @@ nagios_src: "nagioscore-nagios-{{ nagios_version }}"
 nagios_plugins_version: 2.2.1
 
 # The Nagios Plugins download url
-nagios_plugins_url: http://www.nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
+nagios_plugins_url: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{ nagios_plugins_version }}.tar.gz"
 
 # The name of the untarred Nagios Plugins directory
-nagios_plugins_src: nagios_plugins_src: "nagios-plugins-release-{{ nagios_plugins_version }}"
+nagios_plugins_src: "nagios-plugins-release-{{ nagios_plugins_version }}"
 
 # The user which the Nagios daemon runs as
 nagios_monitoring_user: nagios
