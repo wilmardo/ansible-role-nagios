@@ -16,16 +16,17 @@ None.
 ### Default usage
 
 For default usage of this role you only need to define the following:
-    
+```yaml  
     # The users which should be allowed to login to the Nagios web GUI.
     nagios_users:
       - user: nagiosadmin
         pass: Password1change
+```
 
 ### Advance usage
 
 For more advanced usage the following variables are available:
-
+```yaml
     # The directory where the downloaded files will be placed and extracted.
     nagios_download_dir: "{{ ansible_env.HOME }}/nagios"
 
@@ -52,6 +53,7 @@ For more advanced usage the following variables are available:
 
     # The group which the Nagios daemon runs as
     nagios_monitoring_command_group: nagios
+```
 
 ## Dependencies
 
@@ -62,7 +64,7 @@ None.
 Install Nagios and setup the password for your nagiosadmin user.
 
 ```yaml
-    - hosts: monitoring-servers
+    - hosts: nagios
       vars_files:
        - vars/main.yml
       roles:
@@ -79,10 +81,9 @@ But the upgrade requires to remove some old files to, check [build-nagios.yml](t
 
 ## License
 
-BSD
+BSD-3-Clause-Clear
 
 ## Author Information
 
 This role was originally created by [Patrick Ogenstad](http://networklore.com).
-Forked in 2017 by Wilmar den Ouden
-https://wilmardenouden.nl
+Forked in 2017 by [Wilmar den Ouden](https://wilmardenouden.nl)
