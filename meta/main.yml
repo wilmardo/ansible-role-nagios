@@ -27,7 +27,7 @@ galaxy_info:
   galaxy_tags:
     - nagios
     - monitoring
-    - check_nrpe_plugin
-    - nagios_plugins
+    - nrpe
+    - nagiosplugins
 
 dependencies: []
