@@ -47,7 +47,7 @@
     - "/usr/local/nagios/share/main.php"
     - "/usr/local/nagios/share/index.php"
     - "/usr/local/nagios/share/side.php"
-    - "{{ nagios_httpd_conf_location }}/nagios.conf"
+    - "{{ nagios_httpd_location }}/nagios.conf"
     - "/usr/local/nagios/bin/nagios"
     - "/usr/local/nagios/include/nagios/nagios.h"
     - "/etc/init.d/nagios"
@@ -62,7 +62,7 @@
     - "/usr/local/nagios/share/main.php"
     - "/usr/local/nagios/share/index.php"
     - "/usr/local/nagios/share/side.php"
-    - "{{ nagios_httpd_conf_location }}/nagios.conf"
+    - "{{ nagios_httpd_location }}/nagios.conf"
     - "/usr/local/nagios/bin/nagios"
     - "/usr/local/nagios/var/rw"
     - "/usr/local/nagios/include/nagios/nagios.h"
@@ -118,7 +118,7 @@
   command: make install-webconf
   args:
     chdir: "{{ download_dir }}/{{ nagiossrc }}"
-    creates: "{{ nagios_httpd_conf_location }}/nagios.conf"
+    creates: "{{ nagios_httpd_location }}/nagios.conf"
   notify: restart apache
 
 - name: Ensure Nagios is enabled on boot

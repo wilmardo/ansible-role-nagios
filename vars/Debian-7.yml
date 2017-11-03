@@ -1,5 +1,5 @@
 ---
-nagios_httpd_conf_location: /etc/apache2/conf.d
+nagios_httpd_location: /etc/apache2/conf.d
 
 nagios_prerequisites:
   - autoconf
