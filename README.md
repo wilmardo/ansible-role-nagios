@@ -5,7 +5,7 @@
 [![Galaxy](http://img.shields.io/badge/galaxy-wilmardo.nagios-blue.svg)](https://galaxy.ansible.com/wilmardo/nagios/)
 
 Installs Nagios 4.3.2 from source. Once Nagios is installed you can login to http://ip-address/nagios/ using the username and password you configure in the nagios_users variable.
-The nrpe_client can be installed through wilmardo.nrpe_client
+The NRPE client can be installed through [wilmardo.nrpe_client](https://galaxy.ansible.com/wilmardo/nrpe-client/), this enables Nagios to monitor the server.
 
 ## Requirements
 
