@@ -9,14 +9,6 @@
     - rewrite
   notify: restart apache
 
-- name: Enable Nagios Apache conf
-  file:
-    src: "{{ nagios_httpd_conf_location }}/nagios.conf"
-    dest: "{{ nagios_httpd_conf_location |replace('available', 'enabled') }}/nagios.conf "
-    state: link
-  when: "'available' in nagios_httpd_conf_location"
-  notify: restart apache
-
 - name: Set htpasswd for gui users
   htpasswd:
     path: /usr/local/nagios/etc/htpasswd.users
