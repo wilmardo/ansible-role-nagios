@@ -12,4 +12,4 @@ nagios_prerequisites:
   - php5
   - libgd-dev
 
-nagios_init: /etc/init/nagios # Upstart
+nagios_init: /etc/init.d/nagios # Upstart

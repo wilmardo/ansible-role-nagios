@@ -12,4 +12,4 @@ nagios_prerequisites:
   - php5
   - libgd2-xpm-dev
 
-nagios_init: /etc/init.d/nagios # Init.d
+nagios_init: /etc/init.d/nagios # Sysvinit

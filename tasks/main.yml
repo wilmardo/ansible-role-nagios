@@ -23,14 +23,14 @@
   when: ansible_os_family == 'RedHat'
 
 - block:
-    - name: Activate Nagios site on Ubuntu 14.04
-      file:
-        src: /etc/apache2/conf-available/nagios.conf
-        dest: /etc/apache2/conf-enabled/nagios.conf
-        state: link
-        owner: root
-        group: root
-      notify: restart apache
+#    - name: Activate Nagios site on Ubuntu 14.04
+#      file:
+#        src: /etc/apache2/conf-available/nagios.conf
+#        dest: /etc/apache2/conf-enabled/nagios.conf
+#        state: link
+#        owner: root
+#        group: root
+#      notify: restart apache
 
     - name: Enable CGI
       apache2_module:

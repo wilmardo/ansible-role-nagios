@@ -30,7 +30,7 @@
     tags:
       - skip_ansible_lint
     check_mode: no
-  
+
   - name: Check if upgrade is required
     set_fact:
       nagios_upgrade_required: true
