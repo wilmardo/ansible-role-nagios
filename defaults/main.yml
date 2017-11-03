@@ -1,6 +1,4 @@
 ---
-# defaults file for nagios
-
 # Directory that will be used as the location for the downloads§
 download_dir: "{{ ansible_env.HOME }}/nagios"
 

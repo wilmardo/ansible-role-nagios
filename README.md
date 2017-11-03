@@ -1,16 +1,11 @@
-# TODO
-- [ ] Add compilation of check_nrpe plugin https://support.nagios.com/kb/article/nrpe-how-to-install-nrpe-v3-from-source.html
-- [x] Update links to Github
-- [x] Plugins in defaults.yml could be nicer
-- [x] Adds LXC testing
-- [x] Add my standard os'es
+# wilmardo.nagios
+=========
 
-
-# Ansible Role: Nagios
-
-[![Build Status](https://travis-ci.org/networklore/ansible-role-nagios.svg?branch=master)](https://travis-ci.org/networklore/ansible-role-nagios)
+[![Build Status](https://travis-ci.org/wilmardo/ansible-role-nagios.svg?branch=master)](https://travis-ci.org/wilmardo/ansible-role-nagios)
+[![Galaxy](http://img.shields.io/badge/galaxy-wilmardo.nagios-blue.svg)](https://galaxy.ansible.com/wilmardo/nagios/)
 
 Installs Nagios 4.3.2 from source. Once Nagios is installed you can login to http://ip-address/nagios/ using the username and password you configure in the nagios_users variable.
+The nrpe_client can be installed through wilmardo.nrpe_client
 
 ## Requirements
 
@@ -58,15 +53,7 @@ Install Nagios and setup the password for your nagiosadmin user.
       vars_files:
        - vars/main.yml
       roles:
-         - { role: networklore.nagios }
-```
-
-*Contents of vars/main.yml*:
-
-```yaml
-    nagios_users:
-      - user: nagiosadmin
-        pass: S3cre7Passw0rd
+         - { role: wilmardo.nagios }
 ```
 
 ## Upgrading
@@ -83,4 +70,6 @@ BSD
 
 ## Author Information
 
-This role was created in 2016 by [Patrick Ogenstad](http://networklore.com).
+This role was originally created by [Patrick Ogenstad](http://networklore.com).
+Forked in 2017 by Wilmar den Ouden
+https://wilmardenouden.nl
