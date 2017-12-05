@@ -11,5 +11,3 @@ nagios_prerequisites:
   - apache2-utils
   - php
   - libgd-dev
-
-nagios_init: /etc/init.d/nagios # Systemd
