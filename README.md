@@ -14,7 +14,7 @@ None.
 
 ### Default usage
 
-For default usage of this role you only need to define the following:
+For default usage of this role you only need to define the following, for more advanced usage look at the [Advanced usage](#advanced-usage) section:
 ```yaml  
 # The users which should be allowed to login to the Nagios web GUI.
 nagios_users:
