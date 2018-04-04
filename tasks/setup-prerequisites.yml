@@ -31,12 +31,12 @@
 
 - block:
 
-    - name: Install Nagios prerequisites with yum
+    - name: Install Nagios prerequisites with dnf
       dnf:
         name: "{{ nagios_prerequisites }}"
         state: present
 
-    - name: Install Plugin prerequisites with yum
+    - name: Install Plugin prerequisites with dnf
       dnf:
         name: "{{ nagios_plugins_prerequisites }}"
         state: present
