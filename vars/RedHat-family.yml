@@ -25,3 +25,5 @@ nagios_plugins_prerequisites:
   - net-snmp
   - net-snmp-utils
   - which
+
+nagios_init: /etc/rc.d/init.d/nagios  # Systemd
