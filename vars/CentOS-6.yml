@@ -1,2 +1,2 @@
 ---
-nagios_init: /etc/init.d/nagios # Upstart
+nagios_init: /etc/init.d/nagios  # Upstart

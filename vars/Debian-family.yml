@@ -17,4 +17,4 @@ nagios_plugins_prerequisites:
   - libnet-snmp-perl
   - gettext
 
-nagios_init: /etc/init.d/nagios # Sysvinit
+nagios_init: /etc/init.d/nagios  # Sysvinit
