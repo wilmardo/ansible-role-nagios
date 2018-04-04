@@ -1,5 +1,4 @@
 ---
-
 - name: Get Plugins
   get_url:
     url: "{{ nagios_plugins_url }}"

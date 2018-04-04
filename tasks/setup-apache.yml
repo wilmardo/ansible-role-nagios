@@ -1,5 +1,4 @@
 ---
-
 - name: Enable CGI
   apache2_module:
     name: "{{ item }}"
@@ -25,3 +24,8 @@
     state: link
   notify: restart apache
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
+
+- name: Ensure Apache is enabled on boot
+  service:
+    name: "{{ apache_service }}"
+    enabled: true

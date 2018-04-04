@@ -1,19 +1,16 @@
 ---
-
 - block:
 
     - name: Install Nagios prerequisites with apt
       apt:
-        name: "{{ item }}"
+        name: "{{ nagios_prerequisites }}"
         state: present
         update_cache: true
-      with_items: "{{ nagios_prerequisites }}"
 
     - name: Install Plugin prerequisites with apt
       apt:
-        name: "{{ item }}"
+        name: "{{ nagios_plugins_prerequisites }}"
         state: present
-      with_items: "{{ nagios_plugins_prerequisites }}"
 
   when: ansible_os_family == "Debian"
 
@@ -21,27 +18,32 @@
 
     - name: Install Nagios prerequisites with yum
       yum:
-        name: "{{ item }}"
+        name: "{{ nagios_prerequisites }}"
         state: present
         update_cache: true
-      with_items: "{{ nagios_prerequisites }}"
 
     - name: Install Plugin prerequisites with yum
       yum:
-        name: "{{ item }}"
+        name: "{{ nagios_plugins_prerequisites }}"
         state: present
-      with_items: "{{ nagios_plugins_prerequisites }}"
 
-  when: ansible_os_family == "RedHat"
+  when: ansible_distribution == "CentOS"
+
+- block:
+
+    - name: Install Nagios prerequisites with yum
+      dnf:
+        name: "{{ nagios_prerequisites }}"
+        state: present
+
+    - name: Install Plugin prerequisites with yum
+      dnf:
+        name: "{{ nagios_plugins_prerequisites }}"
+        state: present
+
+  when: ansible_distribution == "Fedora"
 
 - name: Install Ansible prerequisites
   package:
-    name: "{{ item }}"
+    name: python-passlib
     state: present
-  with_items:
-    - python-passlib
-
-- name: Ensure Apache is enabled on boot
-  service:
-    name: "{{ apache_service }}"
-    enabled: true

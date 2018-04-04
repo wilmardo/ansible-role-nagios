@@ -1,11 +1,5 @@
 ---
-
 - block:
-
-  - name: Install required libselinux-python
-    yum:
-      name: libselinux-python
-      state: present
 
   - name: Downloading the EPEL repository definitions.
     get_url:

@@ -1,5 +1,4 @@
 ---
-
 - name: Create nagcmd group
   group:
     name: "{{ nagios_monitoring_command_group }}"
