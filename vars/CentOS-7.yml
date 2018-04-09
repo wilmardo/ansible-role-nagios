@@ -1,2 +1,0 @@
----
-nagios_init: /etc/rc.d/init.d/nagios # Systemd

@@ -1,7 +1,11 @@
 ---
-
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}-family.yml"
 
 - name: Include Distribution version specific variables
   include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Include CentOS 6 specific variables
+  include_vars: CentOS-6.yml
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '6'

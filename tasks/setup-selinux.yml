@@ -18,5 +18,5 @@
   file:
     path: /usr/local/nagios setype=httpd_sys_content_t
     state: directory
-    recurse: yes
+    recurse: true
   when: current_selinux_mode == 'enforcing'

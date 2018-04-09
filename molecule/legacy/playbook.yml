@@ -1,0 +1,21 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-nagios
+
+  post_tasks:
+    - name: Wait for Nagios to succesfully restart
+      wait_for:
+        port: 80
+
+    - name: Test Nagios webinterface
+      uri:
+        url: "http://nagiosadmin:Password1change@{{ inventory_hostname }}/nagios/"
+
+    - name: Grab system Logs
+      shell: "journalctl -xn || cat /var/log/messages || cat /var/log/syslog"
+      environment:
+        - PAGER: cat
+      changed_when: false
+      ignore_errors: true

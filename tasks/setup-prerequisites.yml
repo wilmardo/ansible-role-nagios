@@ -1,47 +1,49 @@
 ---
-
 - block:
 
-  - name: Install Nagios prerequisites with apt
-    apt:
-      name: "{{ item }}"
-      state: present
-      update_cache: yes
-    with_items: "{{ nagios_prerequisites }}"
+    - name: Install Nagios prerequisites with apt
+      apt:
+        name: "{{ nagios_prerequisites }}"
+        state: present
+        update_cache: true
 
-  - name: Install Plugin prerequisites with apt
-    apt:
-      name: "{{ item }}"
-      state: present
-    with_items: "{{ nagios_plugins_prerequisites }}"
+    - name: Install Plugin prerequisites with apt
+      apt:
+        name: "{{ nagios_plugins_prerequisites }}"
+        state: present
 
   when: ansible_os_family == "Debian"
 
 - block:
 
-  - name: Install Nagios prerequisites with yum
-    yum:
-      name: "{{ item }}"
-      state: present
-      update_cache: yes
-    with_items: "{{ nagios_prerequisites }}"
+    - name: Install Nagios prerequisites with yum
+      yum:
+        name: "{{ nagios_prerequisites }}"
+        state: present
+        update_cache: true
 
-  - name: Install Plugin prerequisites with yum
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items: "{{ nagios_plugins_prerequisites }}"
+    - name: Install Plugin prerequisites with yum
+      yum:
+        name: "{{ nagios_plugins_prerequisites }}"
+        state: present
 
-  when: ansible_os_family == "RedHat"
+  when: ansible_distribution == "CentOS"
+
+- block:
+
+    - name: Install Nagios prerequisites with dnf
+      dnf:
+        name: "{{ nagios_prerequisites }}"
+        state: present
+
+    - name: Install Plugin prerequisites with dnf
+      dnf:
+        name: "{{ nagios_plugins_prerequisites }}"
+        state: present
+
+  when: ansible_distribution == "Fedora"
 
 - name: Install Ansible prerequisites
   package:
-    name: "{{ item }}"
+    name: python-passlib
     state: present
-  with_items:
-    - python-passlib
-
-- name: Ensure Apache is enabled on boot
-  service:
-    name: "{{ apache_service }}"
-    enabled: yes

@@ -1,6 +1,4 @@
 ---
-# tasks file for nagios
-
 - name: Ensure download directory is present
   file:
     path: "{{ nagios_download_dir }}"

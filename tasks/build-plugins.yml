@@ -1,5 +1,4 @@
 ---
-
 - name: Get Plugins
   get_url:
     url: "{{ nagios_plugins_url }}"
@@ -9,7 +8,7 @@
   unarchive:
     src: "{{ nagios_download_dir }}/{{ nagios_plugins_src }}.tar.gz"
     dest: "{{ nagios_download_dir }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Setup Plugins
   command: ./tools/setup

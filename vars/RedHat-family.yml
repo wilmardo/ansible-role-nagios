@@ -14,14 +14,16 @@ nagios_prerequisites:
   - gd-devel
 
 nagios_plugins_prerequisites:
-   - gcc
-   - glibc
-   - glibc-common
-   - make
-   - gettext
-   - automake
-   - autoconf
-   - openssl-devel
-   - net-snmp
-   - net-snmp-utils
-   - which
+  - gcc
+  - glibc
+  - glibc-common
+  - make
+  - gettext
+  - automake
+  - autoconf
+  - openssl-devel
+  - net-snmp
+  - net-snmp-utils
+  - which
+
+nagios_init: /etc/rc.d/init.d/nagios  # Systemd
