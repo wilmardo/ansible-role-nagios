@@ -11,18 +11,23 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 7
         - 6
+        - 7
+
+    - name: Fedora
+      versions:
+        - 26
+        - 27
 
     - name: Ubuntu
       versions:
-        - xenial
         - trusty
+        - xenial
 
     - name: Debian
       versions:
-        - stretch
         - jessie
+        - stretch
 
   galaxy_tags:
     - nagios
