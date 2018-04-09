@@ -19,8 +19,6 @@ platforms:
 
 provisioner:
   name: ansible
-  options:
-    v: true
   lint:
     name: ansible-lint
 
