@@ -16,19 +16,19 @@ galaxy_info:
 
     - name: Fedora
       versions:
-        - 27
+#        - 27
         - 26
         - 25
 
     - name: Ubuntu
       versions:
-        - xenial
+#        - xenial
 #        - trusty
 
     - name: Debian
       versions:
         - stretch
-        - jessie
+#        - jessie
 
   galaxy_tags:
     - nagios
