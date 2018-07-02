@@ -8,34 +8,29 @@ cache:
 env:
   global:
     - fast_finish: true
-    - MAKEFLAGS="-j 2"
-    - SCENARIO=default
 
 matrix:
   include:
-    - env: ANSIBLE_VERSION='<2.4.0'  # 2.3.x bugs and security
-    - env: ANSIBLE_VERSION='<2.5.0'  # 2.4.x bugs and security
-    - env: ANSIBLE_VERSION='<2.6.0'  # 2.5.x bugs and security
-    - env: ANSIBLE_VERSION=''  # Pre-releases
-
-  allow_failures:
-    - env: ANSIBLE_VERSION=''  # Pre-releases
+    - env: TAG=2.4  # 2.4.x bugs and security
+    - env: TAG=2.5  # 2.4.x bugs and security
+#    - env: TAG=2.6  # Development
 
 services:
   - docker
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install --only-upgrade docker-ce -y
+addons:
+  apt:
+    sources:
+      - docker-trusty
+    packages:
+      - docker-ce
 
-install:
-  - if [ "$ANSIBLE_VERSION" ]; then pip install --pre ansible${ANSIBLE_VERSION};
-    else pip install ansible; fi
-  - pip install molecule docker-py
-  - ansible --version
+before_script:
+  - sudo service docker stop
+  - sudo dockerd -H unix:///var/run/docker.sock -H tcp://127.0.0.1:2375 </dev/null &>/dev/null &
 
 script:
-  - molecule test --scenario-name $SCENARIO
+  - docker run --net=host -it -v $(pwd):/data/$(basename ~+) -w /data/$(basename ~+) lansible/ansible-dev-container:$TAG molecule converge
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
