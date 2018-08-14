@@ -34,7 +34,7 @@ script:
   - |
     docker run --net=host -it -v $(pwd):/data/$(basename ~+) \
     -w /data/$(basename ~+) \
-    lansible/ansible-dev-container:$TAG molecule --debug test
+    lansible/ansible-dev-container:$TAG molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
