@@ -1,0 +1,6 @@
+---
+# The Nagios download url
+nagios_url: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz"
+
+# The Nagios Plugins download url
+nagios_plugins_url: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{nagios_plugins_version}}.tar.gz"

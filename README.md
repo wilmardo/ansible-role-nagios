@@ -26,20 +26,21 @@ nagios_users:
 
 For more advanced usage the following variables are available:
 ```yaml
+# The users which should be allowed to login to the Nagios web GUI.
+nagios_users:
+  - user: nagiosadmin
+    pass: Password1change
+
 # The directory where the downloaded files will be placed and extracted.
 nagios_download_dir: "{{ ansible_env.HOME }}/nagios"
 
 # The version of Nagios to be installed
-nagios_version: 4.3.4
-# The Nagios download url
-nagios_url: "https://github.com/NagiosEnterprises/nagioscore/archive/nagios-{{ nagios_version }}.tar.gz"
+nagios_version: 4.4.1
 # The name of the untarred Nagios directory
 nagios_src: "nagioscore-nagios-{{ nagios_version }}"
 
 # The version of Nagios Plugins to be installed
 nagios_plugins_version: 2.2.1
-# The Nagios Plugins download url
-nagios_plugins_url: "https://github.com/nagios-plugins/nagios-plugins/archive/release-{{ nagios_plugins_version }}.tar.gz"
 # The name of the untarred Nagios Plugins directory
 nagios_plugins_src: "nagios-plugins-release-{{ nagios_plugins_version }}"
 
@@ -47,6 +48,7 @@ nagios_plugins_src: "nagios-plugins-release-{{ nagios_plugins_version }}"
 nagios_monitoring_user: nagios
 # The group which the Nagios daemon runs as
 nagios_monitoring_command_group: nagios
+
 ```
 
 ## Dependencies

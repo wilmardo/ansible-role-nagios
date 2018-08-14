@@ -1,3 +1,7 @@
+#### 1.1.2
+* Moved download urls to vars/main.yml
+* Fixed line-length <120 throughout the role
+
 ### 1.1.1
 
 * Ubuntu 12.04 support added

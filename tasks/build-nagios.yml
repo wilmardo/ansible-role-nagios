@@ -22,8 +22,10 @@
 
 - block:
 
-    - name: read nagios installed version
-      shell: head /usr/local/nagios/share/main.php | grep "this_version" | cut -d"=" -f 2 | tr --delete ";" | tr --delete "'" | xargs echo -n
+    - name: Read nagios installed version
+      shell: |
+        head /usr/local/nagios/share/main.php | grep "this_version" | \
+        cut -d"=" -f 2 | tr --delete ";" | tr --delete "'" | xargs echo -n
       changed_when: false
       register: cmd_nagios_version
       tags:
@@ -70,7 +72,9 @@
   notify: restart nagios
 
 - name: Configure Nagios
-  command: ./configure --with-command-group={{ nagios_monitoring_command_group }} --with-nagios-user={{ nagios_monitoring_user }}
+  command: |
+    ./configure --with-command-group={{ nagios_monitoring_command_group }} \
+                --with-nagios-user={{ nagios_monitoring_user }}
   args:
     chdir: "{{ nagios_download_dir }}/{{ nagios_src }}"
     creates: "{{ nagios_download_dir }}/{{ nagios_src }}/Makefile"
